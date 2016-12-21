@@ -14,7 +14,7 @@ public class propeller : MonoBehaviour {
 	void Update () {
         if (PlayerControl.isbattery)
         {
-            transform.Rotate(0, 0, 10);
+            transform.Rotate(0, 0, 30);
         }
 	}
 }

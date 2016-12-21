@@ -17,6 +17,6 @@ public class PlayStart : MonoBehaviour {
 
     public void click()
     {
-        SceneManager.LoadScene("scene1");
+        SceneManager.LoadScene("SceneO^hara");
     }
 }
