@@ -38,11 +38,11 @@ public class PlayerController : MonoBehaviour {
                 this.gameObject.transform.position = new Vector3(-11, this.gameObject.transform.position.y, -3);
                 break;
             case 4:
-                this.gameObject.transform.rotation = new Quaternion(0, 1f, 0, 1);
+                this.gameObject.transform.rotation = new Quaternion(0, 0.4f, 0, 1);
                 this.gameObject.transform.position = new Vector3(-11, this.gameObject.transform.position.y, -7);
                 break;
             case 5:
-                this.gameObject.transform.rotation = new Quaternion(0, 0f, 0, 1);
+                this.gameObject.transform.rotation = new Quaternion(0, -0.4f, 0, 1);
                 this.gameObject.transform.position = new Vector3(-7, this.gameObject.transform.position.y, -11);
                 break;
             case 6:
