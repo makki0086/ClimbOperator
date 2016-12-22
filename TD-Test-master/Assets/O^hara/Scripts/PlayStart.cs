@@ -17,6 +17,6 @@ public class PlayStart : MonoBehaviour {
 
     public void click()
     {
-        SceneManager.LoadScene("SceneO^hara");
+        SceneManager.LoadScene("ModeSelect");
     }
 }
