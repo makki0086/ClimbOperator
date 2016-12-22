@@ -29,7 +29,7 @@ public class FloorMove : MonoBehaviour
 		if (m_Pausing == false)
 		{
 			
-			m_Floor.position = new Vector3 (m_Floor.position.x, m_Player.position.y - 15.0f * m_Slider.value, m_Floor.position.z);
+			m_Floor.position = new Vector3 (m_Floor.position.x, m_Player.position.y - 13.0f * m_Slider.value, m_Floor.position.z);
 		}
 
 	}

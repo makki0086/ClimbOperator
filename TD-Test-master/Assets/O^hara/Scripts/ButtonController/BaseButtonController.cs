@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class BaseButtonController : MonoBehaviour {
-
+   
     public BaseButtonController button;
-	
+    
     void Awake()
     {
         
