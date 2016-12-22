@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviour
 	//private float m_Y = 1.0f;
 	private float m_Z = 4.0f;
 
-	[SerializeField]
+
 	private Slider m_Slider;
 
 	private bool m_S;
@@ -65,7 +65,7 @@ public class PlayerControl : MonoBehaviour
 		}
 		else
 		{
-			if (m_Player.position.y - m_Floor.position.y > 18.0f)
+			/*if (m_Player.position.y - m_Floor.position.y > 18.0f)
 			{
 				m_Speed = 0.2f;
 				m_.GetComponent<Renderer>().material.color = new Color (0, 0, 0, 0.0f);
@@ -75,7 +75,7 @@ public class PlayerControl : MonoBehaviour
 				m_Speed = 0.3f;
 
 				m_.GetComponent<Renderer>().material.color = new Color (1, 0, 0, 1.0f);
-			}
+			}*/
 		}
 
 		m_Player.position = new Vector3 (m_Player.position.x, m_Player.position.y + m_Speed, m_Player.position.z);
