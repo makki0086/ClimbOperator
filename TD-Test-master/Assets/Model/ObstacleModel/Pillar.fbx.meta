@@ -1,25 +1,15 @@
 fileFormatVersion: 2
-guid: ebfe4be59572847e68853ce4d87a42dc
-timeCreated: 1479705226
+guid: 08ba077a58661d64fb67ab60df230c3e
+timeCreated: 1484111987
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: PLAYER_ARM
-    100004: PLAYER_PROPELLER
     400000: //RootNode
-    400002: PLAYER_ARM
-    400004: PLAYER_PROPELLER
     2300000: //RootNode
-    2300002: PLAYER_ARM
-    2300004: PLAYER_PROPELLER
     3300000: //RootNode
-    3300002: PLAYER_ARM
-    3300004: PLAYER_PROPELLER
-    4300000: PLAYER_BODY
-    4300002: PLAYER_PROPELLER
-    4300004: PLAYER_ARM
+    4300000: Pillar
   materials:
     importMaterials: 1
     materialName: 0
