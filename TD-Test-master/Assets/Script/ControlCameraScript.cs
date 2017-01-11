@@ -19,16 +19,16 @@ public class ControlCameraScript : MonoBehaviour
 		m_Camera.position = new Vector3 (m_Camera.position.x, m_Player.position.y + 24, m_Camera.position.z);
 
 
-		#if UNITY_EDITOR_WIN
-		float x = 10 * Input.GetAxis("Mouse X"); 
-		float y = -10 * Input.GetAxis("Mouse Y");
+		//#if UNITY_EDITOR_WIN
+		//float x = 10 * Input.GetAxis("Mouse X"); 
+		//float y = -10 * Input.GetAxis("Mouse Y");
 
-		m_Camera.transform.Rotate(y, x, 0);
+		//m_Camera.transform.Rotate(y, x, 0);
 
-		float z = m_Camera.transform.eulerAngles.z;
+		//float z = m_Camera.transform.eulerAngles.z;
 
-		m_Camera.transform.Rotate(0, 0, -z);
-		#endif
+		//m_Camera.transform.Rotate(0, 0, -z);
+		//#endif
 
 
 

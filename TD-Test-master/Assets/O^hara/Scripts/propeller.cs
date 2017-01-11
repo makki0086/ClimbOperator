@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
-
-public class PlayStart : MonoBehaviour {
+public class propeller : MonoBehaviour {
+    
+    
 
 	// Use this for initialization
 	void Start () {
@@ -12,11 +12,9 @@ public class PlayStart : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (PlayerControl.isbattery)
+        {
+            transform.Rotate(0, 0, 30);
+        }
 	}
-
-    public void click()
-    {
-        SceneManager.LoadScene("scene1");
-    }
 }

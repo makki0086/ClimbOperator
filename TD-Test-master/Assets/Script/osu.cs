@@ -97,7 +97,7 @@ public class osu : MonoBehaviour
 		}
 		if (M_number == 5)
 		{
-			SceneManager.LoadScene("scene1");
+			SceneManager.LoadScene("SceneO^hara");
 		}
         if (M_number == 6)
         {

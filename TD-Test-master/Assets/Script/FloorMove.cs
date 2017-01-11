@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class FloorMove : MonoBehaviour 
 {
@@ -7,14 +8,17 @@ public class FloorMove : MonoBehaviour
 	private Transform m_Floor;
 
 	[SerializeField]
-	private float m_Speed;
+	private Transform m_Player;
 
 	private bool m_Pausing;
+
+
+	private Slider m_Slider;
 
 	// Use this for initialization
 	void Start () 
 	{
-	
+		m_Slider = GameObject.Find("Slider").GetComponent<Slider>();
 	}
 	
 	// Update is called once per frame
@@ -24,13 +28,9 @@ public class FloorMove : MonoBehaviour
 
 		if (m_Pausing == false)
 		{
-			m_Floor.position = new Vector3 (m_Floor.position.x, m_Floor.position.y + m_Speed, m_Floor.position.z);
+			
+			m_Floor.position = new Vector3 (m_Floor.position.x, m_Player.position.y - 13.0f * m_Slider.value, m_Floor.position.z);
 		}
 
-		//if()
-		{
-
-
-		}
 	}
 }
