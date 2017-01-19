@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44864005, g: 0.4986922, b: 0.57588625, a: 1}
+  m_IndirectSpecularColor: {r: 0.44988483, g: 0.49998736, b: 0.57601863, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -527,7 +527,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!33 &213716630
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -580,7 +580,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 124
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &213716634
 MonoBehaviour:
@@ -1036,10 +1036,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 343536788}
-  m_LocalRotation: {x: 0.34097347, y: 0.4194325, z: -0.17373462, w: 0.82318276}
-  m_LocalPosition: {x: 4.2, y: 14.49, z: -21.49}
+  m_LocalRotation: {x: 0.32300976, y: 0.35853243, z: -0.13379502, w: 0.86557394}
+  m_LocalPosition: {x: -15, y: 15, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 45, y: 54, z: 0}
+  m_LocalEulerAnglesHint: {x: 40.925003, y: 44.751003, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2056,7 +2056,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: -0.5, z: 0}
+  m_Center: {x: 0, y: -0.2, z: 0}
 --- !u!33 &738021520
 MeshFilter:
   m_ObjectHideFlags: 0
