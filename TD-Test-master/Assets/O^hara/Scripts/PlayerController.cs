@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private PlayerPositionCounter counter;
     //   public Text debagtext;
     [SerializeField]
-    //! プレイヤー
+    //! プレイヤーの座標
     private Transform m_Player;
     //! 移動開始座標
     private Vector3 startPos;
@@ -23,7 +23,21 @@ public class PlayerController : MonoBehaviour
     //! ポジションカウント
     private int count;
 
-   
+    [SerializeField]
+    //! フロアの座標
+    private Transform m_Floor;
+    //! プレイヤーが登る速さ
+    private float moveSpeed_Y;
+
+    Rigidbody rb;
+    private Vector3 localGravity;
+
+    private GameObject m_Battery;
+    private GameObject m_Battery_Back;
+    private Slider m_Slider;
+
+    private bool isBattery;
+
     /// <summary>
     /// 
     /// </summary>
@@ -35,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
         //! プレイヤーポジションカウンターの取得
         counter = GetComponent<PlayerPositionCounter>();
-
+        
         //! デバッグ
         //Debug.Log("PlyerController__Awakeを終了しました。");
 
@@ -46,13 +60,20 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        
+
         //! デバッグ
         //Debug.Log("PlyerController__Startを開始しました。");
-
+        //localGravity = new Vector3(0, 0.5f, 0);
+        m_Battery = GameObject.Find("Battery");
+       
+        m_Slider = GameObject.Find("Battery").GetComponent<Slider>();
+        
+        m_Slider.value = 1.0f;
+        moveSpeed_Y = m_Slider.value/10+0.2f;
+        isBattery = true;
         //! デバッグ
         //Debug.Log("PlyerController__Startを終了しました。");
-
+        
     }
 
     /// <summary>
@@ -61,6 +82,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        m_Slider.value -= 0.00084f;
+        moveSpeed_Y = m_Slider.value / 10 + 0.2f;
+        if(m_Slider.value<=0)
+        {
+            isBattery = false;
+            m_Slider.value = 0;
+        }
+        //moveSpeed_Y -= 0.0008f;
+        //moveSpeed_Y = 0.2f;
+        this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + moveSpeed_Y, this.gameObject.transform.position.z);
+        
         
         //! デバッグ
         //Debug.Log("PlyerController__Updateを開始しました。");
@@ -70,6 +102,8 @@ public class PlayerController : MonoBehaviour
 
         //! デバッグ
         //Debug.Log("PlyerController__Updateを終了しました。");
+
+        
 
     }
 
@@ -379,6 +413,42 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("PlyerController__CHANGE_Playerを終了しました。");
 
     }
-    
+    public void Skill()
+    {
+        foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+        {
+            // シーン上に存在するオブジェクトならば処理.
+            if (obj.activeInHierarchy)
+            {
+                // GameObjectの名前を表示.
+                // Debug.Log(obj.name);
+                if (obj.tag == "Obstacle")
+                {
+                    if (m_Player.transform.position.x == obj.transform.position.x && m_Player.transform.position.z == obj.transform.position.z)
+                    {
+                        // Debug.Log(obj.name);
+                         rb = obj.GetComponent<Rigidbody>();
+                        Debug.Log("前"+rb.useGravity);
+                        
+                        //rb.useGravity = false;
+                        rb.AddForce(localGravity, ForceMode.Acceleration);
+                        Debug.Log("後"+rb.useGravity);
+                        //StartCoroutine("aa");
+                       // Debug.Log("aa");
+                        
+                    }
+                }
+            }
+        }
+    }
+    void a()
+    {
+        //rb.useGravity = true;
+    }
+    IEnumerator aa()
+    {
+        a();
+        yield return new WaitForSeconds(10.5f);
+    }
 }
 

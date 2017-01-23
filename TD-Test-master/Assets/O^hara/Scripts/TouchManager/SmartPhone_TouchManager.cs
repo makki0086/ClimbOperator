@@ -36,21 +36,21 @@ public class SmartPhone_TouchManager : MonoBehaviour
 
                 case TouchPhase.Began:
 
-                    touchManager.StartPosition = touch.position;
-                    if(TouchManager.mode==TouchMode.Touch)
-                    {
-                        touchManager.IsTouch = true;
-                    }
+                    //touchManager.StartPosition = touch.position;
+                   // if(TouchManager.mode==TouchMode.Touch)
+                    //{
+                    //    touchManager.IsTouch = true;
+                    //}
                     break;
 
 
 
                 case TouchPhase.Ended:
                     touchManager.EndPosition = touch.position;
-                    if (TouchManager.mode == TouchMode.Swaipe)
-                    {
+                   // if (TouchManager.mode == TouchMode.Swaipe)
+                    //{
                         touchManager.IsTouch = true;
-                    }
+                    //}
                     
                     break;
             }

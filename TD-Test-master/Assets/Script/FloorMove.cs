@@ -18,7 +18,7 @@ public class FloorMove : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		m_Slider = GameObject.Find("Slider").GetComponent<Slider>();
+		m_Slider = GameObject.Find("Battery").GetComponent<Slider>();
 	}
 	
 	// Update is called once per frame
