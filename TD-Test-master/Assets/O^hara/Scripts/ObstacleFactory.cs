@@ -55,7 +55,7 @@ public class ObstacleFactory : MonoBehaviour {
         }
 
         MakeObstacleValue_Min = 1;
-        MakeObstacleValue_Max = 8;
+        MakeObstacleValue_Max = 6;
 
         MakeObstacleValue = Random.Range(MakeObstacleValue_Min, MakeObstacleValue_Max + 1);
 

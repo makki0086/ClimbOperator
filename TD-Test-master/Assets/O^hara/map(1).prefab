@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_obstacle_prefab:
-  - {fileID: 1000012570724384, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
+  - {fileID: 1000012949121044, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
 --- !u!114 &114000012457357266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_obstacle_prefab:
-  - {fileID: 1000012570724384, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
+  - {fileID: 1000012949121044, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
 --- !u!114 &114000013078632434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_obstacle_prefab:
-  - {fileID: 1000012570724384, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
+  - {fileID: 1000012949121044, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
 --- !u!114 &114000013217799414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,4 +250,8 @@ MonoBehaviour:
   pil:
   - {fileID: 1000012257450052}
   - {fileID: 1000012296400826, guid: 8acd1258a95185a4ea293d11c9e42116, type: 2}
+  - {fileID: 1000012001685030, guid: 7e2452866d540d24d99775786da2c2b4, type: 2}
+  - {fileID: 1000010207619010, guid: 8ac0a049ced5ca347887c1d79cfbe45c, type: 2}
+  - {fileID: 1000011762661662, guid: bfd54911cf73fe845a5b944a86eef4e7, type: 2}
+  - {fileID: 1000012407848300, guid: 042a9f03b377eee4395814d1eb3f6b9d, type: 2}
   pilji: []

@@ -27,7 +27,7 @@ public class MapController : MonoBehaviour {
                 //this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.transform.position.y+116, this.gameObject.transform.position.z);
                 //pil.tag = "Pillar";
                 //GameObject gg = pil[Random.Range(0, 2)];
-                int random = Random.Range(0, 2);
+                int random = Random.Range(0,pil.Length);
                 GameObject GO = Instantiate(pil[random], pos, Quaternion.identity) as GameObject;
                 GO.name = pil[random].gameObject.name;
                 Destroy(this.gameObject);

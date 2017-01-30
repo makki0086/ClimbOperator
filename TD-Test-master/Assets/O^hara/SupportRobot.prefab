@@ -1096,13 +1096,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Storage_Battery_prefab:
-  - {fileID: 1000013166039472, guid: 7fb8b158d230d83428c23b323c32404a, type: 2}
-  - {fileID: 1000014003083152, guid: d5c3f6e8e25964a479d6ae4bbbf76675, type: 2}
-  - {fileID: 1000013550938136, guid: 91b5a06f0376b11489a33904b3d45e2d, type: 2}
+  - {fileID: 1000011821926268, guid: 7fb8b158d230d83428c23b323c32404a, type: 2}
+  - {fileID: 1000011219897424, guid: d5c3f6e8e25964a479d6ae4bbbf76675, type: 2}
+  - {fileID: 1000013649370366, guid: 91b5a06f0376b11489a33904b3d45e2d, type: 2}
   m_DryBattery_prefab:
-  - {fileID: 1000010595645472, guid: 45c6984098a8a0047b1cc1d6bd809bb8, type: 2}
-  - {fileID: 1000012486562864, guid: b880253536c660044acccce13760c771, type: 2}
-  - {fileID: 1000010303495368, guid: 9707fa458d0488148a0312bb2ea1ee71, type: 2}
+  - {fileID: 1000013298122434, guid: 45c6984098a8a0047b1cc1d6bd809bb8, type: 2}
+  - {fileID: 1000013601967398, guid: b880253536c660044acccce13760c771, type: 2}
+  - {fileID: 1000012965527988, guid: 9707fa458d0488148a0312bb2ea1ee71, type: 2}
 --- !u!137 &137000011473073312
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

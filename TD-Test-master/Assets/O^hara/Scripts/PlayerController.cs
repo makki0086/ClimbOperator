@@ -23,20 +23,26 @@ public class PlayerController : MonoBehaviour
     //! ポジションカウント
     private int count;
 
-    [SerializeField]
+   // [SerializeField]
     //! フロアの座標
-    private Transform m_Floor;
+   // private Transform m_Floor;
     //! プレイヤーが登る速さ
     private float moveSpeed_Y;
 
-    Rigidbody rb;
-    private Vector3 localGravity;
+    //private StorageBattery storageBattery;
+    //[SerializeField]
+    //private GameObject StorageBatteryUI;
 
-    private GameObject m_Battery;
-    private GameObject m_Battery_Back;
-    private Slider m_Slider;
+  //  private GameObject m_Battery;
+    //private GameObject m_Battery_Back;
+  //  private Slider m_Slider;
 
     private bool isBattery;
+
+    private RobotTypeManager.RobotType type;
+    [SerializeField]
+    private GameObject BatteryUI;
+    private UISelector selector;
 
     /// <summary>
     /// 
@@ -49,7 +55,8 @@ public class PlayerController : MonoBehaviour
 
         //! プレイヤーポジションカウンターの取得
         counter = GetComponent<PlayerPositionCounter>();
-        
+         selector= BatteryUI.GetComponent<UISelector>();
+       // storageBattery = StorageBatteryUI.GetComponent<StorageBattery>();
         //! デバッグ
         //Debug.Log("PlyerController__Awakeを終了しました。");
 
@@ -64,13 +71,14 @@ public class PlayerController : MonoBehaviour
         //! デバッグ
         //Debug.Log("PlyerController__Startを開始しました。");
         //localGravity = new Vector3(0, 0.5f, 0);
-        m_Battery = GameObject.Find("Battery");
+        //m_Battery = GameObject.Find("DryBattery");
        
-        m_Slider = GameObject.Find("Battery").GetComponent<Slider>();
+       // m_Slider = m_Battery.GetComponent<Slider>();
         
-        m_Slider.value = 1.0f;
-        moveSpeed_Y = m_Slider.value/10+0.2f;
+       // m_Slider.value = 3.0f;
+       // moveSpeed_Y = m_Slider.value/30;
         isBattery = true;
+        type = RobotTypeManager.getRobotType();
         //! デバッグ
         //Debug.Log("PlyerController__Startを終了しました。");
         
@@ -82,15 +90,39 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        m_Slider.value -= 0.00084f;
-        moveSpeed_Y = m_Slider.value / 10 + 0.2f;
-        if(m_Slider.value<=0)
+
+        if (selector.Battery_Slider.value <= 0)
         {
-            isBattery = false;
-            m_Slider.value = 0;
+
+            moveSpeed_Y = 0.1f;
         }
+        else
+        {
+
+
+            switch (type)
+            {
+                case RobotTypeManager.RobotType.DryBattery:
+                    moveSpeed_Y = 0.3f;
+                    break;
+                case RobotTypeManager.RobotType.StorageBattery:
+                    moveSpeed_Y = selector.ActualValue / 10f+0.05f;
+                    break;
+            }
+
+        }
+        selector.EnergyReduction(0.00084f);
+        //m_Slider.value -= 0.00084f;
+        // moveSpeed_Y = m_Slider.value / 10 + 0.2f;
+        // if(m_Slider.value<=0)
+        //  {
+        //      isBattery = false;
+        //    m_Slider.value = 0;
+        //  }
         //moveSpeed_Y -= 0.0008f;
-        //moveSpeed_Y = 0.2f;
+        //moveSpeed_Y = 0.3f;
+       // float a = this.gameObject.transform.position.y;
+       // float b = a += moveSpeed_Y;
         this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + moveSpeed_Y, this.gameObject.transform.position.z);
         
         
@@ -427,12 +459,7 @@ public class PlayerController : MonoBehaviour
                     if (m_Player.transform.position.x == obj.transform.position.x && m_Player.transform.position.z == obj.transform.position.z)
                     {
                         // Debug.Log(obj.name);
-                         rb = obj.GetComponent<Rigidbody>();
-                        Debug.Log("前"+rb.useGravity);
-                        
-                        //rb.useGravity = false;
-                        rb.AddForce(localGravity, ForceMode.Acceleration);
-                        Debug.Log("後"+rb.useGravity);
+                         
                         //StartCoroutine("aa");
                        // Debug.Log("aa");
                         
@@ -450,5 +477,77 @@ public class PlayerController : MonoBehaviour
         a();
         yield return new WaitForSeconds(10.5f);
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+
+
+        if (collision.transform.tag == "Battery_S")
+        {
+            switch(type)
+            {
+                case RobotTypeManager.RobotType.DryBattery:
+                    selector.EnergyExchange(1, new Vector2(80, 100));
+                    break;
+                case RobotTypeManager.RobotType.StorageBattery:
+                    selector.EnergyIncrease(0.5f);
+                  //  storageBattery.UpBattery(0.1f);
+                    Debug.Log("hit");
+                    break;
+            }
+            //storageBattery.UpBattery(0.1f);
+            
+        }
+        if (collision.transform.tag == "Battery_M")
+        {
+            switch (type)
+            {
+                case RobotTypeManager.RobotType.DryBattery:
+                    selector.EnergyExchange(2, new Vector2(80, 200));
+                    break;
+                case RobotTypeManager.RobotType.StorageBattery:
+                    selector.EnergyIncrease(1.0f);
+                    //  storageBattery.UpBattery(0.1f);
+                    Debug.Log("hit");
+                    break;
+            }
+
+            //storageBattery.UpBattery(0.1f);
+            Debug.Log("hit");
+        }
+        if (collision.transform.tag == "Battery_L")
+            
+        {
+            switch (type)
+            {
+                case RobotTypeManager.RobotType.DryBattery:
+                    selector.EnergyExchange(3, new Vector2(80, 300));
+                    break;
+                case RobotTypeManager.RobotType.StorageBattery:
+                    selector.EnergyIncrease(2.0f);
+                    //  storageBattery.UpBattery(0.1f);
+                    Debug.Log("hit");
+                    break;
+            }
+            //storageBattery.UpBattery(0.1f);
+            Debug.Log("hit");
+        }
+        if(collision.transform.tag== "Obstacle")
+        {
+            selector.EnergyReduction(0.5f);
+
+            //switch (type)
+            //{
+            //    case RobotTypeManager.RobotType.DryBattery:
+            //        break;
+            //    case RobotTypeManager.RobotType.StorageBattery:
+            //        Debug.Log("hit");
+            //       // storageBattery.DownBattery(0.5f);
+            //        break;
+            //}
+
+        }
+    }
 }
+
 
