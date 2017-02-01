@@ -10,6 +10,13 @@ public class GameOver : MonoBehaviour
 	private Text m_GameOver;
 
     [SerializeField]
+    private GameObject m_Score;
+    [SerializeField]
+    private Text m_GameOverScore;
+
+   
+
+    [SerializeField]
     private GameObject m_Title;
 
     [SerializeField]
@@ -62,7 +69,9 @@ public class GameOver : MonoBehaviour
             BGM2.SetActive(true);
             //m_Restart.localPosition = new Vector3 (0.0f, -400.0f, 0.0f);
             m_GameOver.text = "GameOver";
-			pausing = true;
+            m_GameOverScore.text =  m_Score.GetComponent<Text>().text;
+            m_Score.SetActive(false);
+            pausing = true;
 
 			Destroy(GameObject.Find("Left"));
 			Destroy(GameObject.Find("Right"));

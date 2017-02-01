@@ -25,6 +25,16 @@ public class Score : MonoBehaviour
 	void Update () 
 	{
 		m_Score = m_Player.position.y - 1;
-		m_Text.text = "登った高さ:" + ((int)m_Score).ToString ()+"m";
+        m_ToInt = (int)m_Score;
+		m_Text.text = "登った高さ:" + m_ToInt.ToString ()+"m";
 	}
+
+    public int ScorePoint
+    {
+        get
+        {
+            return m_ToInt;
+        }
+    }
+    
 }

@@ -23,9 +23,9 @@ public class PlayerController : MonoBehaviour
     //! ポジションカウント
     private int count;
 
-   // [SerializeField]
+    // [SerializeField]
     //! フロアの座標
-   // private Transform m_Floor;
+    // private Transform m_Floor;
     //! プレイヤーが登る速さ
     private float moveSpeed_Y;
 
@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour
     //[SerializeField]
     //private GameObject StorageBatteryUI;
 
-  //  private GameObject m_Battery;
+    //  private GameObject m_Battery;
     //private GameObject m_Battery_Back;
-  //  private Slider m_Slider;
+    //  private Slider m_Slider;
 
     private bool isBattery;
 
@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private GameObject BatteryUI;
     private UISelector selector;
 
+    private bool isSkill;
     /// <summary>
     /// 
     /// </summary>
@@ -55,8 +56,8 @@ public class PlayerController : MonoBehaviour
 
         //! プレイヤーポジションカウンターの取得
         counter = GetComponent<PlayerPositionCounter>();
-         selector= BatteryUI.GetComponent<UISelector>();
-       // storageBattery = StorageBatteryUI.GetComponent<StorageBattery>();
+        selector = BatteryUI.GetComponent<UISelector>();
+        // storageBattery = StorageBatteryUI.GetComponent<StorageBattery>();
         //! デバッグ
         //Debug.Log("PlyerController__Awakeを終了しました。");
 
@@ -65,30 +66,31 @@ public class PlayerController : MonoBehaviour
     /// 
     /// </summary>
     // Use this for initialization
-    void Start ()
+    void Start()
     {
 
         //! デバッグ
         //Debug.Log("PlyerController__Startを開始しました。");
         //localGravity = new Vector3(0, 0.5f, 0);
         //m_Battery = GameObject.Find("DryBattery");
-       
-       // m_Slider = m_Battery.GetComponent<Slider>();
-        
-       // m_Slider.value = 3.0f;
-       // moveSpeed_Y = m_Slider.value/30;
-        isBattery = true;
+
+        // m_Slider = m_Battery.GetComponent<Slider>();
+
+        // m_Slider.value = 3.0f;
+        // moveSpeed_Y = m_Slider.value/30;
+        //isBattery = true;
         type = RobotTypeManager.getRobotType();
+        isSkill = false;
         //! デバッグ
         //Debug.Log("PlyerController__Startを終了しました。");
-        
+
     }
 
     /// <summary>
     /// 
     /// </summary>
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
 
         if (selector.Battery_Slider.value <= 0)
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
                     moveSpeed_Y = 0.3f;
                     break;
                 case RobotTypeManager.RobotType.StorageBattery:
-                    moveSpeed_Y = selector.ActualValue / 10f+0.05f;
+                    moveSpeed_Y = selector.ActualValue / 10f + 0.05f;
                     break;
             }
 
@@ -121,21 +123,21 @@ public class PlayerController : MonoBehaviour
         //  }
         //moveSpeed_Y -= 0.0008f;
         //moveSpeed_Y = 0.3f;
-       // float a = this.gameObject.transform.position.y;
-       // float b = a += moveSpeed_Y;
+        // float a = this.gameObject.transform.position.y;
+        // float b = a += moveSpeed_Y;
         this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + moveSpeed_Y, this.gameObject.transform.position.z);
-        
-        
+
+
         //! デバッグ
         //Debug.Log("PlyerController__Updateを開始しました。");
-        
+
         //! チェンジプレイヤーの呼び出し
         CHANGE_Player();
 
         //! デバッグ
         //Debug.Log("PlyerController__Updateを終了しました。");
 
-        
+
 
     }
 
@@ -192,10 +194,10 @@ public class PlayerController : MonoBehaviour
     {
         //! デバッグ
         //Debug.Log("PlyerController__CHANGE_Playerを開始しました。");
-        
+
         //! カウントにプレイヤーポジションカウンターからカウントを取得する
         count = counter.PositionCount;
-        
+
         //! カウントを調べる
         switch (count)
         {
@@ -213,24 +215,24 @@ public class PlayerController : MonoBehaviour
 
                 //! プレイヤーの向きを角度変更を補完しながら向きを変更する
                 m_Player.transform.rotation = Quaternion.Slerp(startDir, endDir, Time.deltaTime * 15.0f);
-                
+
                 //! 移動開始座標に今の座標を取得する
                 startPos = this.gameObject.transform.position;
-                
+
                 //! 移動終了座標に終了座標を設定する
                 endPos = new Vector3(-11.0f, this.gameObject.transform.position.y, 5);
-                
+
                 //! プレイヤーの座標を補完しながら座標を変更する
                 this.gameObject.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 15);
-                
+
                 //! デバッグ
                 //Debug.Log("カウント１の処理を終了しました。");
-                
+
                 //! 処理を抜ける
                 break;
 
             //! カウント2の処理
-            case 2: 
+            case 2:
 
                 //! デバッグ
                 //Debug.Log("カウント2の処理を開始しました。");
@@ -447,35 +449,460 @@ public class PlayerController : MonoBehaviour
     }
     public void Skill()
     {
-        foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+        if (selector.Battery_Slider.value >= 0)
         {
-            // シーン上に存在するオブジェクトならば処理.
-            if (obj.activeInHierarchy)
+            return;
+        }
+        else
+        { 
+            foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
             {
-                // GameObjectの名前を表示.
-                // Debug.Log(obj.name);
-                if (obj.tag == "Obstacle")
+                // シーン上に存在するオブジェクトならば処理.
+                if (obj.activeInHierarchy)
                 {
-                    if (m_Player.transform.position.x == obj.transform.position.x && m_Player.transform.position.z == obj.transform.position.z)
+                    // GameObjectの名前を表示.
+                    // Debug.Log(obj.name);
+                    if (obj.tag == "Obstacle")
                     {
-                        // Debug.Log(obj.name);
-                         
-                        //StartCoroutine("aa");
-                       // Debug.Log("aa");
-                        
+                        if (m_Player.transform.position.x == obj.transform.position.x && m_Player.transform.position.z == obj.transform.position.z)
+                        {
+                            // Debug.Log(obj.name);
+                            Obstacle a = obj.GetComponent<Obstacle>();
+                            a.Speed = 0;
+                            isSkill = true;
+                            //  StartCoroutine("aa",obj);
+                            // Debug.Log("aa");
+
+                        }
+                    }
+                }
+
+            }
+            if (isSkill)
+            {
+                selector.EnergyReduction(0.25f);
+                isSkill = false;
+            }
+        }
+    
+    }
+    public void Skill2()
+    {
+        if (selector.Battery_Slider.value >= 0)
+        {
+        }
+        else
+        { 
+            foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+            {
+                // シーン上に存在するオブジェクトならば処理.
+                if (obj.activeInHierarchy)
+                {
+                    // GameObjectの名前を表示.
+                    // Debug.Log(obj.name);
+                    if (obj.tag == "Obstacle")
+                    {
+                        if (m_Player.transform.position.x == obj.transform.position.x && m_Player.transform.position.z == obj.transform.position.z)
+                        {
+                            count = counter.PositionCount;
+
+                            //! カウントを調べる
+                            switch (count)
+                            {
+                                //! カウント1の処理
+                                case 1:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント１の処理を開始しました。");
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-11.0f, obj.transform.position.y + 10, 1);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント１の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント2の処理
+                                case 2:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント2の処理を開始しました。");
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-11, obj.transform.position.y + 10, 5);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント2の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント3の処理
+                                case 3:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント3の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-11, obj.transform.position.y + 10, -7);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント3の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント4の処理
+                                case 4:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント4の処理を開始しました。");
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-11, obj.transform.position.y + 10, -7);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント4の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント5の処理
+                                case 5:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント5の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-3, obj.transform.position.y + 10, -11);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント5の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント6の処理
+                                case 6:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント6の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(1, obj.transform.position.y + 10, -11);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント6の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント7の処理
+                                case 7:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント7の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(5, obj.transform.position.y + 10, -11);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント7の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント8の処理
+                                case 8:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント8の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(5, obj.transform.position.y + 10, -11);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント8の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+
+                            }
+                        }
                     }
                 }
             }
+            if (isSkill)
+            {
+                selector.EnergyReduction(0.25f);
+                isSkill = false;
+            }
         }
     }
-    void a()
+    public void Skill3()
     {
-        //rb.useGravity = true;
-    }
-    IEnumerator aa()
-    {
-        a();
-        yield return new WaitForSeconds(10.5f);
+        if (selector.Battery_Slider.value >= 0)
+        {
+        }
+        else
+        { 
+            foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+            {
+                // シーン上に存在するオブジェクトならば処理.
+                if (obj.activeInHierarchy)
+                {
+                    // GameObjectの名前を表示.
+                    // Debug.Log(obj.name);
+                    if (obj.tag == "Obstacle")
+                    {
+                        if (m_Player.transform.position.x == obj.transform.position.x && m_Player.transform.position.z == obj.transform.position.z)
+                        {
+                            count = counter.PositionCount;
+
+                            //! カウントを調べる
+                            switch (count)
+                            {
+                                //! カウント1の処理
+                                case 1:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント１の処理を開始しました。");
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-11.0f, obj.transform.position.y + 10, 5);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント１の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント2の処理
+                                case 2:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント2の処理を開始しました。");
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-11, obj.transform.position.y + 10, 5);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント2の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント3の処理
+                                case 3:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント3の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-11, obj.transform.position.y + 10, -1);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント3の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント4の処理
+                                case 4:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント4の処理を開始しました。");
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-11, obj.transform.position.y + 10, -3);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント4の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント5の処理
+                                case 5:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント5の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-7, obj.transform.position.y + 10, -11);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント5の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント6の処理
+                                case 6:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント6の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-7, obj.transform.position.y + 10, -11);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント6の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント7の処理
+                                case 7:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント7の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(-3, obj.transform.position.y + 10, -11);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント7の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+                                //! カウント8の処理
+                                case 8:
+
+                                    //! デバッグ
+                                    //Debug.Log("カウント8の処理を開始しました。");
+
+
+                                    //! 移動開始座標に今の座標を取得する
+                                    startPos = obj.transform.position;
+
+                                    //! 移動終了座標に終了座標を設定する
+                                    endPos = new Vector3(1, obj.transform.position.y + 10, -11);
+
+                                    //! プレイヤーの座標を補完しながら座標を変更する
+                                    obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
+                                    isSkill = true;
+                                    //! デバッグ
+                                    //Debug.Log("カウント8の処理を終了しました。");
+
+                                    //! 処理を抜ける
+                                    break;
+
+
+                            }
+                        }
+                    }
+                }
+            }
+            if (isSkill)
+            {
+                selector.EnergyReduction(0.25f);
+                isSkill = false;
+            }
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -484,19 +911,19 @@ public class PlayerController : MonoBehaviour
 
         if (collision.transform.tag == "Battery_S")
         {
-            switch(type)
+            switch (type)
             {
                 case RobotTypeManager.RobotType.DryBattery:
                     selector.EnergyExchange(1, new Vector2(80, 100));
                     break;
                 case RobotTypeManager.RobotType.StorageBattery:
                     selector.EnergyIncrease(0.5f);
-                  //  storageBattery.UpBattery(0.1f);
+                    //  storageBattery.UpBattery(0.1f);
                     Debug.Log("hit");
                     break;
             }
             //storageBattery.UpBattery(0.1f);
-            
+
         }
         if (collision.transform.tag == "Battery_M")
         {
@@ -516,7 +943,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("hit");
         }
         if (collision.transform.tag == "Battery_L")
-            
+
         {
             switch (type)
             {
@@ -532,19 +959,10 @@ public class PlayerController : MonoBehaviour
             //storageBattery.UpBattery(0.1f);
             Debug.Log("hit");
         }
-        if(collision.transform.tag== "Obstacle")
+        if (collision.transform.tag == "Obstacle")
         {
             selector.EnergyReduction(0.5f);
 
-            //switch (type)
-            //{
-            //    case RobotTypeManager.RobotType.DryBattery:
-            //        break;
-            //    case RobotTypeManager.RobotType.StorageBattery:
-            //        Debug.Log("hit");
-            //       // storageBattery.DownBattery(0.5f);
-            //        break;
-            //}
 
         }
     }

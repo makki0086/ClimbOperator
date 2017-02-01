@@ -93,6 +93,13 @@ public class TouchManager : MonoBehaviour
                 case AngleManager.Angle_Value.LEFT:
                     playerController.DOWN_Position();
                     break;
+
+                case AngleManager.Angle_Value.UPPER_RIGHT:
+                    playerController.Skill2();
+                    break;
+                case AngleManager.Angle_Value.UPPER_LEFT:
+                    playerController.Skill3();
+                    break;
                     
             }
             angle.AzimuthUpdate();

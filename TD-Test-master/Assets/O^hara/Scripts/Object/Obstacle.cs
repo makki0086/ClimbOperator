@@ -32,6 +32,11 @@ public class Obstacle : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        if(collision.transform.tag=="Player")
+        {
+            Destroy(this.gameObject);
+        }
     }
     public float Speed
     {
