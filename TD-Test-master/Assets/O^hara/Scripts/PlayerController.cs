@@ -45,6 +45,9 @@ public class PlayerController : MonoBehaviour
     private UISelector selector;
 
     private bool isSkill;
+    [SerializeField]
+    private Score obstaclecount;
+
     /// <summary>
     /// 
     /// </summary>
@@ -449,7 +452,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Skill()
     {
-        if (selector.Battery_Slider.value >= 0)
+        if (selector.Battery_Slider.value <= 0)
         {
             return;
         }
@@ -488,8 +491,9 @@ public class PlayerController : MonoBehaviour
     }
     public void Skill2()
     {
-        if (selector.Battery_Slider.value >= 0)
+        if (selector.Battery_Slider.value <= 0)
         {
+            return;
         }
         else
         { 
@@ -676,6 +680,8 @@ public class PlayerController : MonoBehaviour
                                     //! プレイヤーの座標を補完しながら座標を変更する
                                     obj.transform.position = Vector3.Lerp(startPos, endPos, Time.deltaTime * 30);
                                     isSkill = true;
+                                    
+                                   
                                     //! デバッグ
                                     //Debug.Log("カウント8の処理を終了しました。");
 
@@ -697,8 +703,9 @@ public class PlayerController : MonoBehaviour
     }
     public void Skill3()
     {
-        if (selector.Battery_Slider.value >= 0)
+        if (selector.Battery_Slider.value <= 0)
         {
+            return;
         }
         else
         { 
@@ -962,6 +969,17 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.tag == "Obstacle")
         {
             selector.EnergyReduction(0.5f);
+            obstaclecount.ObstacleCount = 1;
+           // Debug.Log(obstaclecount.ObstacleCount);
+
+        }
+    }
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.transform.tag == "Obstacle")
+        {
+            selector.EnergyReduction(0.00016f);
 
 
         }

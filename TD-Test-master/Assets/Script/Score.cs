@@ -13,10 +13,11 @@ public class Score : MonoBehaviour
 	private float m_Score;
 
 	private int m_ToInt;
-
+    private int m_obstaclecount;
 	// Use this for initialization
 	void Start () 
 	{
+        m_obstaclecount = 0;
 		m_Score = 0;
 		m_Text.text = "登った高さ:0m";
 	}
@@ -34,6 +35,17 @@ public class Score : MonoBehaviour
         get
         {
             return m_ToInt;
+        }
+    }
+    public int ObstacleCount
+    {
+        get
+        {
+            return m_obstaclecount;
+        }
+        set
+        {
+            m_obstaclecount += value;
         }
     }
     
