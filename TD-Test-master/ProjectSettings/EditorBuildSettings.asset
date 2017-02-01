@@ -10,8 +10,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/Title.unity
   - enabled: 1
+    path: Assets/Scene/RobotTypeSelect.unity
+  - enabled: 0
     path: Assets/Scene/ModeSelect.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scene/scene1.unity
   - enabled: 1
     path: Assets/Scene/SceneO^hara.unity

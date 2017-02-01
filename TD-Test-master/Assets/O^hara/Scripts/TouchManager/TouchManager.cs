@@ -12,7 +12,7 @@ public class TouchManager : MonoBehaviour
     private Vector3 end_Pos;
     //! タッチした？
     private bool isTouch;
-    public static TouchMode mode;
+  //  public static TouchMode mode;
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -25,67 +25,85 @@ public class TouchManager : MonoBehaviour
     {
 
         isTouch = false;
-        mode = TouchMode.Swaipe;
+    //    mode = TouchMode.Swaipe;
 	
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if(isTouch)
+        if (isTouch)
         {
-            switch(mode)
+            // switch(mode)
+            //{
+            //   case TouchMode.Touch:
+            //if (start_Pos == end_Pos)
+            //{
+            //           if (Screen.height / 2 / 2 <= start_Pos.y)
+            //           {
+
+            //               Debug.Log("DD");
+
+            //          }
+            //          if(Screen.height/2>=start_Pos.y&&Screen.width/2<=start_Pos.x)
+            //         {
+            //              playerController.UP_Position();
+            //          }
+            //         if (Screen.height / 2 >= end_Pos.y && Screen.width / 2 >=start_Pos.x)
+            ///         {
+            //             playerController.DOWN_Position();
+            //         }
+            // }
+            //     break;
+            // case TouchMode.Swaipe:
+            if (start_Pos == end_Pos)
             {
-                case TouchMode.Touch:
-                    //if (start_Pos == end_Pos)
-                    //{
-                        if (Screen.height / 2 / 2 <= start_Pos.y)
-                        {
 
-                            Debug.Log("DD");
 
-                        }
-                        if(Screen.height/2>=start_Pos.y&&Screen.width/2<=start_Pos.x)
-                        {
-                            playerController.UP_Position();
-                        }
-                        if (Screen.height / 2 >= end_Pos.y && Screen.width / 2 >=start_Pos.x)
-                        {
-                            playerController.DOWN_Position();
-                        }
-                   // }
-                    break;
-                case TouchMode.Swaipe:
-                    angle.Angle_calculation(start_Pos, end_Pos);
-                    break;
+                
             }
+            else
+            {
+                angle.Angle_calculation(start_Pos, end_Pos);
+            }
+            //    break;
+            // }
 
             isTouch = false;
 
-        }
-        switch (angle.Angle)
-        {
-            case AngleManager.Angle_Value.UP:
-                if (Screen.height / 2 <= end_Pos.y && Screen.height / 2 <= start_Pos.y) 
-                {
-                    Debug.Log("DD");
-                }
-                break;
-            case AngleManager.Angle_Value.DOWN:
-                if (Screen.height / 2 <= end_Pos.y && Screen.height / 2 <= start_Pos.y) 
-                {
-                    Debug.Log("DD");
-                }
-                break;
-            case AngleManager.Angle_Value.RIGHT:
-                playerController.UP_Position();
-                break;
-            case AngleManager.Angle_Value.LEFT:
-                playerController.DOWN_Position();
-                break;
-        }
-        angle.AzimuthUpdate();
+            //   }
+            switch (angle.Angle)
+            {
+                case AngleManager.Angle_Value.UP:
+                 //   if (Screen.height / 2 <= end_Pos.y && Screen.height / 2 <= start_Pos.y)
+                 //   {
+                        Debug.Log("DD");
+                        playerController.Skill();
+                  //  }
+                    break;
+                case AngleManager.Angle_Value.DOWN:
+                   // if (Screen.height / 2 <= end_Pos.y && Screen.height / 2 <= start_Pos.y)
+                    //{
+                        Debug.Log("DD");
+                   // }
+                    break;
+                case AngleManager.Angle_Value.RIGHT:
+                    playerController.UP_Position();
+                    break;
+                case AngleManager.Angle_Value.LEFT:
+                    playerController.DOWN_Position();
+                    break;
 
+                case AngleManager.Angle_Value.UPPER_RIGHT:
+                    playerController.Skill2();
+                    break;
+                case AngleManager.Angle_Value.UPPER_LEFT:
+                    playerController.Skill3();
+                    break;
+                    
+            }
+            angle.AzimuthUpdate();
+        }
 	
 	}
 
@@ -124,9 +142,9 @@ public class TouchManager : MonoBehaviour
         }
     }
 }
- public enum TouchMode
-    {
+// public enum TouchMode
+  //  {
         
-        Touch,
-        Swaipe,
-}
+  //      Touch,
+  //      Swaipe,
+//}

@@ -35,7 +35,7 @@ public class AngleManager : MonoBehaviour {
         if (angleValue != Angle_Value.NONE)
         {
             angleValue = Angle_Value.NONE;
-            Debug.Log("NONE");
+           // Debug.Log("NONE");
         }
     }
 

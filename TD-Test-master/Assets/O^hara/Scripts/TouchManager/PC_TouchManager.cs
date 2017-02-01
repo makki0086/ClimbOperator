@@ -34,20 +34,20 @@ public class PC_TouchManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             touch.StartPosition = mouse_Pos;
-            if (TouchManager.mode == TouchMode.Touch)
-            {
-                touch.IsTouch = true;
-            }
+         //   if (TouchManager.mode == TouchMode.Touch)
+          //  {
+              //  touch.IsTouch = true;
+          //  }
             // Debug.Log("mouse:start" + mouse_Pos);
             // Debug.Log("touch:start" + touch.StartPosition);
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             touch.EndPosition = mouse_Pos;
-            if (TouchManager.mode == TouchMode.Swaipe)
-            {
+           // if (TouchManager.mode == TouchMode.Swaipe)
+          //  {
                 touch.IsTouch = true;
-            }
+           // }
             
             //IsTouch = true;
             //Debug.Log("end" + endPos);
