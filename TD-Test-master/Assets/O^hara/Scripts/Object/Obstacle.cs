@@ -4,6 +4,8 @@ using System.Collections;
 public class Obstacle : MonoBehaviour
 {
     private float speed;
+    private float speed_tmp;
+
     private GameObject m_player;
     // Use this for initialization
     void Start()
@@ -35,9 +37,22 @@ public class Obstacle : MonoBehaviour
 
         if(collision.transform.tag=="Player")
         {
-            Destroy(this.gameObject);
+            this.speed_tmp = this.speed;
+            this.speed = 0;
+            //Destroy(this.gameObject);
         }
     }
+    //オブジェクトが離れた時
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.transform.tag == "Player")
+        {
+
+            this.speed = this.speed_tmp;
+            //Destroy(this.gameObject);
+        }
+    }
+
     public float Speed
     {
         get
