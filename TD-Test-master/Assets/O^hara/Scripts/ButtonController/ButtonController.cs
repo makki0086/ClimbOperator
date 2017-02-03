@@ -2,8 +2,12 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+
+
 public class ButtonController : BaseButtonController
 {
+    [SerializeField]
+    private GameOver gameover; 
    
     void Awake()
     {
@@ -50,6 +54,16 @@ public class ButtonController : BaseButtonController
 
             case "Button":
                 Debug.Log("ww");
+                break;
+
+            case "Title":
+                SceneManager.LoadScene("Title");
+                break;
+            case "Restart":
+                SceneManager.LoadScene("SceneO^hara");
+                break;
+            case "Skip":
+                gameover.Skip();
                 break;
             default:
                 break;

@@ -46,7 +46,10 @@ public class PlayerController : MonoBehaviour
 
     private bool isSkill;
     [SerializeField]
-    private Score obstaclecount;
+   // private GameObject m_Score;
+    private Score score;
+
+
 
     /// <summary>
     /// 
@@ -60,6 +63,8 @@ public class PlayerController : MonoBehaviour
         //! プレイヤーポジションカウンターの取得
         counter = GetComponent<PlayerPositionCounter>();
         selector = BatteryUI.GetComponent<UISelector>();
+        //score = m_Score.GetComponent<Score>();
+        
         // storageBattery = StorageBatteryUI.GetComponent<StorageBattery>();
         //! デバッグ
         //Debug.Log("PlyerController__Awakeを終了しました。");
@@ -930,6 +935,7 @@ public class PlayerController : MonoBehaviour
                     break;
             }
             //storageBattery.UpBattery(0.1f);
+            score.Battery_S_Count = 1;
 
         }
         if (collision.transform.tag == "Battery_M")
@@ -945,7 +951,7 @@ public class PlayerController : MonoBehaviour
                     Debug.Log("hit");
                     break;
             }
-
+            score.Battery_M_Count = 1;
             //storageBattery.UpBattery(0.1f);
             Debug.Log("hit");
         }
@@ -964,12 +970,13 @@ public class PlayerController : MonoBehaviour
                     break;
             }
             //storageBattery.UpBattery(0.1f);
+            score.Battery_L_Count = 1;
             Debug.Log("hit");
         }
         if (collision.transform.tag == "Obstacle")
         {
             selector.EnergyReduction(0.5f);
-            obstaclecount.ObstacleCount = 1;
+            score.ObstacleCount = 1;
            // Debug.Log(obstaclecount.ObstacleCount);
 
         }

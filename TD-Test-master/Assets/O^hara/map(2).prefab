@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_obstacle_prefab:
-  - {fileID: 1000012949121044, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
+  - {fileID: 1000010955669562, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
 --- !u!114 &114000013857647976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,4 +211,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_obstacle_prefab:
-  - {fileID: 1000012949121044, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
+  - {fileID: 1000010955669562, guid: ca21b43b315ca4b4c87b3cd87c9b7a82, type: 2}
