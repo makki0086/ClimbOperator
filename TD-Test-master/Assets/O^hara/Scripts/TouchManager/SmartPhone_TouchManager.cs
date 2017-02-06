@@ -35,17 +35,22 @@ public class SmartPhone_TouchManager : MonoBehaviour
             {
 
                 case TouchPhase.Began:
-
+                    touchManager.IntermediatePosition = touch.position;
+                    touchManager.IsEffectTouch = true;
                     //touchManager.StartPosition = touch.position;
-                   // if(TouchManager.mode==TouchMode.Touch)
+                    // if(TouchManager.mode==TouchMode.Touch)
                     //{
                     //    touchManager.IsTouch = true;
                     //}
                     break;
 
+                case TouchPhase.Moved:
+                    touchManager.IntermediatePosition = touch.position;
+                    break;
 
 
                 case TouchPhase.Ended:
+                    touchManager.IsEffectTouch = false;
                     touchManager.EndPosition = touch.position;
                    // if (TouchManager.mode == TouchMode.Swaipe)
                     //{

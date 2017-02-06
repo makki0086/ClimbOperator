@@ -31,6 +31,7 @@ public class PC_TouchManager : MonoBehaviour
     }
     void PC_Touch()
     {
+        touch.IntermediatePosition = mouse_Pos;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             touch.StartPosition = mouse_Pos;
@@ -40,6 +41,15 @@ public class PC_TouchManager : MonoBehaviour
           //  }
             // Debug.Log("mouse:start" + mouse_Pos);
             // Debug.Log("touch:start" + touch.StartPosition);
+        }
+        if(Input.GetMouseButtonDown(0))
+        {
+            touch.IntermediatePosition=mouse_Pos;
+            touch.IsEffectTouch = true;
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            touch.IsEffectTouch = false;
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
