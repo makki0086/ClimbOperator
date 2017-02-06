@@ -5,26 +5,45 @@ public class TouchManager : MonoBehaviour
 {
     private GameObject player;
     private PlayerController playerController;
+    private GameOver gameover;
     private AngleManager angle;
     //! タッチした場所
     private Vector3 start_Pos;
+
+    private Vector3 intermediate_Pos;
     //! 離した場所
     private Vector3 end_Pos;
     //! タッチした？
     private bool isTouch;
-  //  public static TouchMode mode;
+
+    private bool iseffectTouch;
+
+    [SerializeField]
+    Camera cam;
+    [SerializeField]
+    GameObject CLICK_PARTICLE;
+
+    private GameObject m_ClickParticle;
+
+    private ParticleSystem m_ClickParticleSystem;
+
+    //  public static TouchMode mode;
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerController=player.GetComponent<PlayerController>();
+        gameover = player.GetComponent<GameOver>();
         angle = this.GetComponent<AngleManager>();
     }
 
 	// Use this for initialization
 	void Start ()
     {
-
+        m_ClickParticle = (GameObject)Instantiate(CLICK_PARTICLE);
+        m_ClickParticleSystem = m_ClickParticle.GetComponent<ParticleSystem>();
+        m_ClickParticleSystem.Stop();
         isTouch = false;
+        iseffectTouch = false;
     //    mode = TouchMode.Swaipe;
 	
 	}
@@ -32,8 +51,37 @@ public class TouchManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if(!gameover.IsGameOver)
+        if (iseffectTouch)
+        {
+               // Vector3 pos = intermediate_Pos;
+          //  Vector3 pos = cam.ScreenToWorldPoint(intermediate_Pos + cam.transform.forward * 10);
+                //    Vector3 mousePosition = intermediate_Pos;
+                //mousePosition =mousePosition+ cam.transform.forward*10;
+                //mousePosition = cam.ScreenToWorldPoint(mousePosition);
+                //m_ClickParticle.transform.position = mousePosition;
+                //m_ClickParticleSystem.Play();
+                //    mousePosition.z = 20f;
+                //    // mousePosition.z = -40f;
+                //    //mousePosition.x = -40f;// ※Canvasよりは手前に位置させること
+                //    mousePosition = cam.ScreenToWorldPoint(mousePosition);
+              //  m_ClickParticleSystem.Emit(1);
+               // m_ClickParticle.transform.position = pos;
+          
+            //  //  mousePosition.x=mousePosition.x - 40;
+            //    //mousePosition.z = mousePosition.z - 40;
+            //   // m_ClickParticle.transform.position = mousePosition;
+            //    m_ClickParticleSystem.Play();
+
+        }
+            else
+            {
+                m_ClickParticleSystem.Stop();
+            }
+
         if (isTouch)
         {
+
             // switch(mode)
             //{
             //   case TouchMode.Touch:
@@ -118,6 +166,17 @@ public class TouchManager : MonoBehaviour
             start_Pos = value;
         }
     }
+    public Vector3 IntermediatePosition
+    {
+        get
+        {
+            return intermediate_Pos;
+        }
+        set
+        {
+            intermediate_Pos = value;
+        }
+    }
     public Vector3 EndPosition
     {
         get
@@ -139,6 +198,17 @@ public class TouchManager : MonoBehaviour
         set
         {
             isTouch = value;
+        }
+    }
+    public bool IsEffectTouch
+    {
+        get
+        {
+            return iseffectTouch;
+        }
+        set
+        {
+            iseffectTouch = value;
         }
     }
 }

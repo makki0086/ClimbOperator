@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private Quaternion endDir;
     //! ポジションカウント
     private int count;
+    private GameOver gameover;
 
     // [SerializeField]
     //! フロアの座標
@@ -46,7 +47,10 @@ public class PlayerController : MonoBehaviour
 
     private bool isSkill;
     [SerializeField]
-    private Score obstaclecount;
+   // private GameObject m_Score;
+    private Score score;
+
+
 
     /// <summary>
     /// 
@@ -60,6 +64,9 @@ public class PlayerController : MonoBehaviour
         //! プレイヤーポジションカウンターの取得
         counter = GetComponent<PlayerPositionCounter>();
         selector = BatteryUI.GetComponent<UISelector>();
+        gameover = this.GetComponent<GameOver>();
+        //score = m_Score.GetComponent<Score>();
+
         // storageBattery = StorageBatteryUI.GetComponent<StorageBattery>();
         //! デバッグ
         //Debug.Log("PlyerController__Awakeを終了しました。");
@@ -914,74 +921,80 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-
-
-        if (collision.transform.tag == "Battery_S")
+        if (!gameover.IsGameOver)
         {
-            switch (type)
+            if (collision.transform.tag == "Battery_S")
             {
-                case RobotTypeManager.RobotType.DryBattery:
-                    selector.EnergyExchange(1, new Vector2(80, 100));
-                    break;
-                case RobotTypeManager.RobotType.StorageBattery:
-                    selector.EnergyIncrease(0.5f);
-                    //  storageBattery.UpBattery(0.1f);
-                    Debug.Log("hit");
-                    break;
-            }
-            //storageBattery.UpBattery(0.1f);
+                switch (type)
+                {
+                    case RobotTypeManager.RobotType.DryBattery:
+                        selector.EnergyExchange(1, new Vector2(80, 100));
+                        break;
+                    case RobotTypeManager.RobotType.StorageBattery:
+                        selector.EnergyIncrease(0.5f);
+                        //  storageBattery.UpBattery(0.1f);
+                        Debug.Log("hit");
+                        break;
+                }
+                //storageBattery.UpBattery(0.1f);
+                score.Battery_S_Count = 1;
 
-        }
-        if (collision.transform.tag == "Battery_M")
-        {
-            switch (type)
+            }
+            if (collision.transform.tag == "Battery_M")
             {
-                case RobotTypeManager.RobotType.DryBattery:
-                    selector.EnergyExchange(2, new Vector2(80, 200));
-                    break;
-                case RobotTypeManager.RobotType.StorageBattery:
-                    selector.EnergyIncrease(1.0f);
-                    //  storageBattery.UpBattery(0.1f);
-                    Debug.Log("hit");
-                    break;
+                switch (type)
+                {
+                    case RobotTypeManager.RobotType.DryBattery:
+                        selector.EnergyExchange(2, new Vector2(80, 200));
+                        break;
+                    case RobotTypeManager.RobotType.StorageBattery:
+                        selector.EnergyIncrease(1.0f);
+                        //  storageBattery.UpBattery(0.1f);
+                        Debug.Log("hit");
+                        break;
+                }
+                score.Battery_M_Count = 1;
+                //storageBattery.UpBattery(0.1f);
+                Debug.Log("hit");
             }
+            if (collision.transform.tag == "Battery_L")
 
-            //storageBattery.UpBattery(0.1f);
-            Debug.Log("hit");
-        }
-        if (collision.transform.tag == "Battery_L")
-
-        {
-            switch (type)
             {
-                case RobotTypeManager.RobotType.DryBattery:
-                    selector.EnergyExchange(3, new Vector2(80, 300));
-                    break;
-                case RobotTypeManager.RobotType.StorageBattery:
-                    selector.EnergyIncrease(2.0f);
-                    //  storageBattery.UpBattery(0.1f);
-                    Debug.Log("hit");
-                    break;
+                switch (type)
+                {
+                    case RobotTypeManager.RobotType.DryBattery:
+                        selector.EnergyExchange(3, new Vector2(80, 300));
+                        break;
+                    case RobotTypeManager.RobotType.StorageBattery:
+                        selector.EnergyIncrease(2.0f);
+                        //  storageBattery.UpBattery(0.1f);
+                        Debug.Log("hit");
+                        break;
+                }
+                //storageBattery.UpBattery(0.1f);
+                score.Battery_L_Count = 1;
+                Debug.Log("hit");
             }
-            //storageBattery.UpBattery(0.1f);
-            Debug.Log("hit");
-        }
-        if (collision.transform.tag == "Obstacle")
-        {
-            selector.EnergyReduction(0.5f);
-            obstaclecount.ObstacleCount = 1;
-           // Debug.Log(obstaclecount.ObstacleCount);
+            if (collision.transform.tag == "Obstacle")
+            {
+                selector.EnergyReduction(0.5f);
+                score.ObstacleCount = 1;
+                // Debug.Log(obstaclecount.ObstacleCount);
 
+            }
         }
     }
 
     void OnCollisionStay(Collision collision)
     {
-        if (collision.transform.tag == "Obstacle")
+        if (!gameover.IsGameOver)
         {
-            selector.EnergyReduction(0.00016f);
+            if (collision.transform.tag == "Obstacle")
+            {
+                selector.EnergyReduction(0.00016f);
 
 
+            }
         }
     }
 }

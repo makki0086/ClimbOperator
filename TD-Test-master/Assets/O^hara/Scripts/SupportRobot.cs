@@ -18,6 +18,12 @@ public class SupportRobot : MonoBehaviour {
 
     private GameObject m_Floor;
 
+    private const string STORAGE_BATTERY_L_EFFECT_PATH = "Effect/Lightning_big";
+    private const string STORAGE_BATTERY_M_EFFECT_PATH = "Effect/Lightning_during";
+    private const string STORAGE_BATTERY_S_EFFECT_PATH = "Effect/Lightning_small";
+
+    private GameObject effect;
+
     // Use this for initialization
     void Start () {
         m_Floor = GameObject.FindGameObjectWithTag("Floor");
@@ -42,7 +48,35 @@ public class SupportRobot : MonoBehaviour {
             case RobotTypeManager.RobotType.DryBattery:
                 
                 GameObject DryBattery = Instantiate(m_DryBattery_prefab[random], this.gameObject.transform.position - Robot_Forward_Pos, Quaternion.identity) as GameObject;
+
                 DryBattery.name = m_DryBattery_prefab[random].gameObject.name;
+                switch (random)
+                {
+                    case 0:
+                        effect = Instantiate(Resources.Load(STORAGE_BATTERY_L_EFFECT_PATH)) as GameObject;
+                        
+                        //effect.transform.position = new Vector3(0, 0, 0);
+                        effect.transform.parent = DryBattery.transform;
+                        effect.transform.position = DryBattery.transform.position;
+                        break;
+                    case 1:
+                        effect = Instantiate(Resources.Load(STORAGE_BATTERY_M_EFFECT_PATH)) as GameObject;
+                       
+                        //effect.transform.position = new Vector3(0, 0, 0);
+                        effect.transform.parent = DryBattery.transform;
+                        effect.transform.position = DryBattery.transform.position;
+
+                        break;
+                    case 2:
+                        effect = Instantiate(Resources.Load(STORAGE_BATTERY_S_EFFECT_PATH)) as GameObject;
+                        
+                       // effect.transform.position = new Vector3(0, 0, 0);
+                        effect.transform.parent = DryBattery.transform;
+                        effect.transform.position = DryBattery.transform.position;
+
+                        break;
+                }
+
                 break;
         }
 
