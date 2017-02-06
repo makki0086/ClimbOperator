@@ -37,6 +37,7 @@ public class GameOver : MonoBehaviour
     private int battery_S;
     private int Comprehension;
     private bool isGameOver;
+    private bool isfinish;
     //private bool isscorepoint;
     //private bool isobstaclecount;
     //private bool isbattery_L;
@@ -168,6 +169,7 @@ public class GameOver : MonoBehaviour
         battery_M = -1;
         battery_L = -1;
         Comprehension = 0;
+        isfinish = false;
     }
 	
 	/// <summary>
@@ -178,89 +180,140 @@ public class GameOver : MonoBehaviour
         if (isGameOver == true)
         {
 
-        
-            if (height == score.ScorePoint)
+            if (isfinish == false)
             {
-                //isscorepoint = true;
-                if (obstacle == score.ObstacleCount)
+                if (height == score.ScorePoint)
                 {
-                    //isobstaclecount = true;
-                    if(battery_S==score.Battery_S_Count)
+                    //isscorepoint = true;
+                    m_GameOverScore.text = "Height:" + height + " m";
+
+                    if (obstacle == score.ObstacleCount)
                     {
-                        if (battery_M == score.Battery_M_Count)
+
+                        if (obstacle == 0)
                         {
-                            if(battery_L==score.Battery_L_Count)
+                            m_ObstacleScore.text = "Obstacle: - 1 x 0 ( 0 )";
+
+                        }
+                        else
+                        {
+                            m_ObstacleScore.text = "Obstacle: - 1 x " + obstacle + " ( - " + obstacle + " )";
+
+                        }
+                        //isobstaclecount = true;
+                        if (battery_S == score.Battery_S_Count)
+                        {
+                            if (battery_S == 0)
                             {
-                                int value = height + (battery_S) + (battery_M*2) + (battery_L * 3) - obstacle;
-                                if(Comprehension==value)
+                                m_battery_SScore.text = "Battery S: + 1 x 0 ( 0 )";
+
+                            }
+                            else
+                            {
+                                m_battery_SScore.text = "Battery S: + 1 x " + battery_S + " ( + " + battery_S + " )";
+
+                            }
+                            if (battery_M == score.Battery_M_Count)
+                            {
+                                if (battery_M == 0)
                                 {
-                                    
+                                    m_battery_MScore.text = "Battery M: + 2 x 0 ( 0 )";
+
                                 }
                                 else
                                 {
-                                    Comprehension++;
-                                    m_ComprehensioScore.text ="Score: "+ Comprehension;
+                                    m_battery_MScore.text = "Battery M: + 2 x " + battery_M + " ( + " + battery_M * 2 + " )";
+
+                                }
+                                if (battery_L == score.Battery_L_Count)
+                                {
+                                    if (battery_L == 0)
+                                    {
+                                        m_battery_LScore.text = "Battery L: + 3 x 0 ( 0 )";
+                                    }
+                                    else
+                                    {
+                                        m_battery_LScore.text = "Battery L: + 3 x " + battery_L + " ( + " + battery_L * 3 + " )";
+
+                                    }
+                                    int value = height + (battery_S) + (battery_M * 2) + (battery_L * 3) - obstacle;
+                                    if (Comprehension == value)
+                                    {
+                                        m_ComprehensioScore.text = "Score: " + Comprehension;
+                                        isfinish = true;
+                                    }
+                                    else
+                                    {
+                                        Comprehension++;
+                                        m_ComprehensioScore.text = "Score: " + Comprehension;
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    battery_L++;
+                                    m_battery_LScore.text = "Battery L: + 3 x " + battery_L + " ( + " + battery_L * 3 + " )";
                                     return;
                                 }
                             }
                             else
                             {
-                                battery_L++;
-                                m_battery_LScore.text = "Battery L: + 3 x " + battery_L + " ( + " + battery_L*3+" )";
+                                battery_M++;
+                                m_battery_MScore.text = "Battery M: + 2 x " + battery_M + " ( + " + battery_M * 2 + " )";
                                 return;
                             }
                         }
                         else
                         {
-                            battery_M++;
-                            m_battery_MScore.text = "Battery M: + 2 x " + battery_M + " ( + " + battery_M*2+" )";
+                            battery_S++;
+                            m_battery_SScore.text = "Battery S: + 1 x " + battery_S + " ( + " + battery_S + " )";
                             return;
                         }
+
                     }
                     else
                     {
-                        battery_S++;
-                        m_battery_SScore.text = "Battery S: + 1 x " + battery_S + " ( + " + battery_S + " )";
+                        obstacle++;
+                        m_ObstacleScore.text = "Obstacle: - 1 x " + obstacle + " ( - " + obstacle + " )";
                         return;
+
                     }
 
                 }
                 else
                 {
-                    obstacle++;
-                    m_ObstacleScore.text = "Obstacle: - 1 x" + obstacle + " ( - " + obstacle+" )";
+                    height++;
+                    m_GameOverScore.text = "Height:" + height + " m";
                     return;
-
                 }
 
+                //if (isscorepoint == true)
+                //{
+                //    if (obstacle == score.ObstacleCount)
+                //    {
+                //        isobstaclecount = true;
+                //    }
+                //    else
+                //    {
+                //        obstacle++;
+                //        return;
+
+                //    }
+                //}
+
+
+                //}
             }
-            else
-            {
-                height++;
-                m_GameOverScore.text = "Height:" + height + " m";
-                return;
-            }
-
-            //if (isscorepoint == true)
-            //{
-            //    if (obstacle == score.ObstacleCount)
-            //    {
-            //        isobstaclecount = true;
-            //    }
-            //    else
-            //    {
-            //        obstacle++;
-            //        return;
-
-            //    }
-            //}
-
-
-            //}
         }
-
     }
 
+    public bool IsGameOver
+    {
+        get
+        {
+            return isGameOver;
+        }
+    }
 
 	/// <summary>
 	/// 中断
@@ -316,7 +369,7 @@ public class GameOver : MonoBehaviour
     {
         height = score.ScorePoint;
         obstacle = score.ObstacleCount;
-        battery_S = score.Battery_M_Count;
+        battery_S = score.Battery_S_Count;
         battery_M = score.Battery_M_Count;
         battery_L= score.Battery_L_Count;
         Comprehension= height + (battery_S) + (battery_M * 2) + (battery_L * 3) - obstacle;
