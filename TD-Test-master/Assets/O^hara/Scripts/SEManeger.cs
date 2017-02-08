@@ -4,7 +4,7 @@ using System.Collections;
 public class SEManeger : MonoBehaviour {
 
     [SerializeField]
-    private AudioClip[] se;
+    private AudioSource[] se;
 
     
 
