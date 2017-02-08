@@ -10,10 +10,48 @@ public class GameOver : MonoBehaviour
 	private Text m_GameOver;
 
     [SerializeField]
+    private GameObject m_Score;
+    private Score score;
+    [SerializeField]
+    private Text m_GameOverScore;
+    [SerializeField]
+    private Text m_ObstacleScore;
+
+    [SerializeField]
+    private Text m_battery_LScore;
+
+    [SerializeField]
+    private Text m_battery_MScore;
+    [SerializeField]
+    private Text m_battery_SScore;
+    [SerializeField]
+    private Text m_ComprehensioScore;
+    [SerializeField]
+    private GameObject m_GamoverBack;
+
+    private float timeleft;
+    private int height;
+    private int obstacle;
+    private int battery_L;
+    private int battery_M;
+    private int battery_S;
+    private int Comprehension;
+    private bool isGameOver;
+    private bool isfinish;
+    //private bool isscorepoint;
+    //private bool isobstaclecount;
+    //private bool isbattery_L;
+    //private bool isbattery_M;
+    //private bool isbattery_S;
+    
+
+    [SerializeField]
     private GameObject m_Title;
 
     [SerializeField]
 	private GameObject m_Restart;
+    [SerializeField]
+    private GameObject m_Skip;
 
     [SerializeField]
     private GameObject BGM;
@@ -58,14 +96,26 @@ public class GameOver : MonoBehaviour
 			Debug.Log ("GameOver");
             m_Title.SetActive(true);
 			m_Restart.SetActive(true);
+            m_Skip.SetActive(true);
             BGM.SetActive(false);
             BGM2.SetActive(true);
+            m_GamoverBack.SetActive(true);
             //m_Restart.localPosition = new Vector3 (0.0f, -400.0f, 0.0f);
             m_GameOver.text = "GameOver";
-			pausing = true;
 
-			Destroy(GameObject.Find("Left"));
-			Destroy(GameObject.Find("Right"));
+            isGameOver = true;
+            
+               
+            
+            m_Score.SetActive(false);
+            //for(int i=0;i<score.ObstacleCount+1;i++)
+            //{
+                
+            //}
+            pausing = true;
+
+			//Destroy(GameObject.Find("Left"));
+			//Destroy(GameObject.Find("Right"));
 
 			// Rigidbodyの停止
 			// 子要素から、スリープ中でなく、IgnoreGameObjectsに含まれていないRigidbodyを抽出
@@ -99,9 +149,27 @@ public class GameOver : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+        isGameOver = false;
+        //isscorepoint = false;
+        //isobstaclecount = false;
+        //isbattery_L = false;
+        //isbattery_M = false;
+        //isbattery_S = false;
 		pausing = false;
         BGM.SetActive(true);
         BGM2.SetActive(false);
+        m_Title.SetActive(false);
+        m_Restart.SetActive(false);
+        m_GamoverBack.SetActive(false);
+        m_Skip.SetActive(false);
+        score = m_Score.GetComponent<Score>();
+        height = 0;
+        obstacle = -1;
+        battery_S = -1;
+        battery_M = -1;
+        battery_L = -1;
+        Comprehension = 0;
+        isfinish = false;
     }
 	
 	/// <summary>
@@ -109,9 +177,143 @@ public class GameOver : MonoBehaviour
 	/// </summary>
 	void Update()
 	{
+        if (isGameOver == true)
+        {
 
-	}
+            if (isfinish == false)
+            {
+                if (height == score.ScorePoint)
+                {
+                    //isscorepoint = true;
+                    m_GameOverScore.text = "Height:" + height + " m";
 
+                    if (obstacle == score.ObstacleCount)
+                    {
+
+                        if (obstacle == 0)
+                        {
+                            m_ObstacleScore.text = "Obstacle: - 10 x 0 ( 0 )";
+
+                        }
+                        else
+                        {
+                            m_ObstacleScore.text = "Obstacle: - 10 x " + obstacle + " ( - " + obstacle*10 + " )";
+
+                        }
+                        //isobstaclecount = true;
+                        if (battery_S == score.Battery_S_Count)
+                        {
+                            if (battery_S == 0)
+                            {
+                                m_battery_SScore.text = "Battery S: + 3 x 0 ( 0 )";
+
+                            }
+                            else
+                            {
+                                m_battery_SScore.text = "Battery S: + 3 x " + battery_S + " ( + " + battery_S*3 + " )";
+
+                            }
+                            if (battery_M == score.Battery_M_Count)
+                            {
+                                if (battery_M == 0)
+                                {
+                                    m_battery_MScore.text = "Battery M: + 2 x 0 ( 0 )";
+
+                                }
+                                else
+                                {
+                                    m_battery_MScore.text = "Battery M: + 2 x " + battery_M + " ( + " + battery_M * 2 + " )";
+
+                                }
+                                if (battery_L == score.Battery_L_Count)
+                                {
+                                    if (battery_L == 0)
+                                    {
+                                        m_battery_LScore.text = "Battery L: + 1 x 0 ( 0 )";
+                                    }
+                                    else
+                                    {
+                                        m_battery_LScore.text = "Battery L: + 1 x " + battery_L + " ( + " + battery_L * 1 + " )";
+
+                                    }
+                                    int value = height + (battery_S*3) + (battery_M * 2) + (battery_L * 1) - (obstacle*10);
+                                    if (Comprehension == value)
+                                    {
+                                        m_ComprehensioScore.text = "Score: " + Comprehension;
+                                        isfinish = true;
+                                    }
+                                    else
+                                    {
+                                        Comprehension++;
+                                        m_ComprehensioScore.text = "Score: " + Comprehension;
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    battery_L++;
+                                    m_battery_LScore.text = "Battery L: + 1 x " + battery_L + " ( + " + battery_L * 1 + " )";
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                battery_M++;
+                                m_battery_MScore.text = "Battery M: + 2 x " + battery_M + " ( + " + battery_M * 2 + " )";
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            battery_S++;
+                            m_battery_SScore.text = "Battery S: + 3 x " + battery_S + " ( + " + battery_S*3 + " )";
+                            return;
+                        }
+
+                    }
+                    else
+                    {
+                        obstacle++;
+                        m_ObstacleScore.text = "Obstacle: - 10 x " + obstacle + " ( - " + obstacle*10 + " )";
+                        return;
+
+                    }
+
+                }
+                else
+                {
+                    height++;
+                    m_GameOverScore.text = "Height:" + height + " m";
+                    return;
+                }
+
+                //if (isscorepoint == true)
+                //{
+                //    if (obstacle == score.ObstacleCount)
+                //    {
+                //        isobstaclecount = true;
+                //    }
+                //    else
+                //    {
+                //        obstacle++;
+                //        return;
+
+                //    }
+                //}
+
+
+                //}
+            }
+        }
+    }
+
+    public bool IsGameOver
+    {
+        get
+        {
+            return isGameOver;
+        }
+    }
 
 	/// <summary>
 	/// 中断
@@ -163,6 +365,15 @@ public class GameOver : MonoBehaviour
 			monoBehaviour.enabled = true;
 		}
 	}
+    public void Skip()
+    {
+        height = score.ScorePoint;
+        obstacle = score.ObstacleCount;
+        battery_S = score.Battery_S_Count;
+        battery_M = score.Battery_M_Count;
+        battery_L= score.Battery_L_Count;
+        Comprehension= height + (battery_S*3) + (battery_M * 2) + (battery_L * 1) - (obstacle*10);
+    }
 
 
 }

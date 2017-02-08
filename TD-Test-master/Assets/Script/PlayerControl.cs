@@ -46,6 +46,7 @@ public class PlayerControl : MonoBehaviour
 
 	void Start ()
 	{
+        
 		m_Slider = GameObject.Find("Slider").GetComponent<Slider>();
 		m_Slider.value = 1.0f;
 		m_S = false;

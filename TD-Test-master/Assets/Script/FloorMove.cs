@@ -12,14 +12,16 @@ public class FloorMove : MonoBehaviour
 
 	private bool m_Pausing;
 
+    [SerializeField]
+    private GameObject BatteryUI;
+    //private Slider m_Slider;
+    private UISelector selector;
 
-	private Slider m_Slider;
-
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start () 
 	{
-		m_Slider = GameObject.Find("Slider").GetComponent<Slider>();
-	}
+        selector = BatteryUI.GetComponent<UISelector>();
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -29,8 +31,9 @@ public class FloorMove : MonoBehaviour
 		if (m_Pausing == false)
 		{
 			
-			m_Floor.position = new Vector3 (m_Floor.position.x, m_Player.position.y - 13.0f * m_Slider.value, m_Floor.position.z);
-		}
+		//	m_Floor.position = new Vector3 (m_Floor.position.x, m_Player.position.y - 13.0f * m_Slider.value, m_Floor.position.z);
+            m_Floor.position = new Vector3(m_Floor.position.x, m_Player.position.y - selector.ActualValue, m_Floor.position.z);
+        }
 
 	}
 }
