@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scene/RobotTypeSelect.unity
+- path: Assets/Scene/SceneO^hara.unity
   isLoaded: 1
   isActive: 1
